@@ -16,13 +16,12 @@
     <div id="game-holder" style="text-align: center"></div>
     <script>
         let speed = 15;
-        let currentPlayerIndex = -1;
-
-        
+        let currentPlayerIndex = {{ Auth::id() }};
+        let players = [];
+        let name = "{{ Auth::user()->name }}"
 
         window.onload = () => {
-            socket.emit("player assign", null);
-            socket.emit("player position all", null);
+            socket.emit("player position all");
         };
 
         let setPos = (msg) => {
@@ -41,10 +40,6 @@
                 if (data !== null)
                     if (data.idx !== currentPlayerIndex) setPos(data);
             });
-        });
-
-        socket.on("player assign", function(msg) {
-            if (currentPlayerIndex == -1) currentPlayerIndex = msg;
         });
 
         document.onkeydown = function(event) {
@@ -83,15 +78,15 @@
         });
         document.getElementById("game-holder").appendChild(app.view);
 
-        let sp_w = 150;
-        let sp_h = 150;
+        let sp_w = 120;
+        let sp_h = 120;
 
-        let players = [];
-        for (let i = 0; i <= 11; i++) {
-            let sprite = PIXI.Sprite.from("/sprites/sprite_tank_" + i+".png");
+        for (let i = 0; i <= 20; i++) {
+            let sprite = PIXI.Sprite.from("/sprites/sprite_tank_" + i + ".png");
             sprite.width = sp_w;
             sprite.height = sp_h;
             sprite.newRotation = 0; //my custom property
+            sprite.name = "";
 
             sprite.pivot.set(400, 400);
             sprite.position.set(W / 2, H / 2);
