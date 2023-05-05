@@ -18,6 +18,8 @@
         let speed = 15;
         let currentPlayerIndex = -1;
 
+        
+
         window.onload = () => {
             socket.emit("player assign", null);
             socket.emit("player position all", null);
@@ -72,7 +74,7 @@
             });
         };
 
-        let W = 1000,
+        let W = 900,
             H = 550;
 
         let app = new PIXI.Application({

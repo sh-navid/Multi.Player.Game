@@ -22,7 +22,6 @@ let players = [
   null,
   null,
 ];
-let chats = [];
 
 io.on("connection", (socket) => {
   console.log("a user connected");
