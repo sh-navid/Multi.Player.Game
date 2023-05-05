@@ -1,6 +1,11 @@
 <?php
 
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,5 +19,31 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('home');
+});
+
+Route::get('/home', function () {
+    if (Auth::check())
+        return view('home');
+    return redirect("login");
+});
+
+Route::view("/register", "register");
+Route::post("/register", function (Request $request) {
+    $request["password"] = Hash::make($request['password']);
+    User::create($request->all());
+    return redirect("login")->with('msg', 'You are a user now');
+});
+
+Route::view("/login", "login");
+Route::post("/login", function (Request $request) {
+    if (Auth::attempt($request->only('email', 'password')))
+        return redirect('home');
+    return redirect("login");
+});
+
+Route::get("/logout", function () {
+    Session::flush();
+    Auth::logout();
+    return redirect('home');
 });
