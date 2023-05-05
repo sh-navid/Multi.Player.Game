@@ -7,7 +7,6 @@ const io = require("socket.io")(server, {
     cors: { origin: `*`, methods: ["GET", "POST"] },
 });
 
-let playerCounter = -1;
 let players = [];
 
 io.on("connection", (socket) => {
@@ -24,13 +23,6 @@ io.on("connection", (socket) => {
     players[msg.idx] = msg;
     io.emit("player move", msg);
     console.log(msg);
-  });
-
-  socket.on("player assign", () => {
-    playerCounter++;
-    if (playerCounter <= 11) {
-      io.emit("player assign", playerCounter);
-    }
   });
 });
 
