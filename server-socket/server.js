@@ -8,20 +8,7 @@ const io = require("socket.io")(server, {
 });
 
 let playerCounter = -1;
-let players = [
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-];
+let players = [];
 
 io.on("connection", (socket) => {
   console.log("a user connected");
