@@ -23,8 +23,10 @@ Route::get('/', function () {
 });
 
 Route::get('/home', function () {
-    if (Auth::check())
-        return view('home');
+    if (Auth::check()) {
+        $users = User::all();
+        return view('home', compact("users"));
+    }
     return redirect("login");
 });
 

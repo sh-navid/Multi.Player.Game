@@ -66,6 +66,7 @@
                 x: players[currentPlayerIndex].x,
                 y: players[currentPlayerIndex].y,
                 newRotation: players[currentPlayerIndex].newRotation,
+                name: name,
             });
         };
 
@@ -109,6 +110,18 @@
             });
         });
     </script>
+
+    @foreach ($users as $user)
+        <div style="display: inline-block;text-align: center">
+            <img src="/sprites/sprite_tank_{{ $user->id }}.png" style="width: 5em" alt="">
+            @if ($user->id === Auth::id())
+            <span style="display: block; border:1px solid gold">{{ $user->name }}</span>
+            @else
+            <span style="display: block; border:1px solid gray">{{ $user->name }}</span>
+            @endif
+            
+        </div>
+    @endforeach
 </body>
 
 </html>
